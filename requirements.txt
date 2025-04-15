@@ -1,0 +1,7 @@
+black~=25.1.0
+django-filter~=24.3
+djangorestframework-gis~=1.1
+djangorestframework~=3.15
+django~=5.2
+# TODO when going to production install this locally
+psycopg[binary]~=3.2
