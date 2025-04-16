@@ -26,17 +26,27 @@ async function load_markers() {
     );
     const geojson = await response.json();
     return geojson;
-  }
+}
   
-  async function render_markers() {
+async function render_markers() {
     const markers = await load_markers();
     layerGroup.clearLayers();
-    L.geoJSON(markers)
-      .bindPopup(
-        (layer) =>
-          layer.feature.properties.name
-      )
-      .addTo(layerGroup);
-  }
+    L.geoJSON(markers, {
+      style: function() {
+        return {
+          color: "#ff7800",
+          weight: 2,
+          fillColor: "#ff9900",
+          fillOpacity: 0.3,
+          opacity: 0.6
+        };
+      },
+      onEachFeature: function(feature, layer) {
+        if (feature.properties && feature.properties.name) {
+          layer.bindPopup(feature.properties.name);
+        }
+      }
+    }).addTo(layerGroup);
+}
   
-  map.on("moveend", render_markers);
+map.on("moveend", render_markers);
